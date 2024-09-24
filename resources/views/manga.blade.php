@@ -23,6 +23,7 @@
         p.card-text {
             margin-top: -10px;
         }
+
     </style>
 </head>
 
@@ -48,7 +49,6 @@
             </form>
 
         </div>
-
         @if (isset($mangaResponse) && !empty($mangaResponse['data']))
             <div class="row">
                 @foreach ($mangaResponse['data'] as $manga)
@@ -61,7 +61,9 @@
                                 <p class="card-text">{{ implode(', ', $manga['genres']) }}</p>
                                 <p class="card-text"><small class="text-muted">Status: {{ $manga['status'] }}</small>
                                 </p>
-                                <a href="#" class="btn btn-secondary">Read More</a>
+                                <a href="{{ route('manga.chapters', ['id' => $manga['id']]) }}">
+                                    <img src="{{ $manga['thumb'] }}" class="img-fluid" alt="{{ $manga['title'] }}">
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -70,7 +72,6 @@
         @elseif(isset($mangaResponse))
             <p>No manga found.</p>
         @endif
-
     </div>
     <footer class="footer">
         <div class="container">

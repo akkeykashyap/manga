@@ -3,23 +3,15 @@
 use App\Http\Controllers\MangaController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 
 // Route::get('manga',[MangaController::class,'show']);
 
 Route::match(['get','post'],'manga',[MangaController::class,'show'])->name('manga_manga');
+
+Route::get('/manga/{id}', [MangaController::class, 'showDetail'])->name('manga.detail');
+
+route::get('manga/chapters/{id}', [MangaController::class, 'fetchChapters'])->name('manga.chapters');
 
