@@ -27,7 +27,8 @@ class MangaController extends Controller
 
             if ($response->successful()) {
                 $mangaResponse = $response->json();
-            } else {
+            }
+            else {
                 $mangaResponse = ['data' => [], 'error' => 'Failed to retrieve data'];
             }
         }
@@ -57,20 +58,40 @@ class MangaController extends Controller
 
     public function fetchChapters($id)
 {
-    $response = Http::withHeaders([
-        "x-rapidapi-host" => "mangaverse-api.p.rapidapi.com",
-        "x-rapidapi-key" => "275ae33d7fmshb2db00522b0c720p135beejsna20a10208221",
-    ])->get("https://mangaverse-api.p.rapidapi.com/manga/chapter?id=659524dd597f3b00281f06ff", [
-        'id' => $id
-    ]);
+    try {
+        $response = Http::withHeaders([
+            "x-rapidapi-host" => "mangaverse-api.p.rapidapi.com",
+            "x-rapidapi-key" => "275ae33d7fmshb2db00522b0c720p135beejsna20a10208221",
+        ])->get("https://mangaverse-api.p.rapidapi.com/manga/chapter?id={$id}");
 
-    if ($response->successful()) {
-        $chapters = $response->json();
-        return view('chapters', ['chapters' => $chapters]);
-    } else {
-        return response()->json(['error' => 'Failed to retrieve chapters'], $response->status());
+        if ($response->successful()) {
+            $chapters = $response->json();
+            return view('chapters', ['chapters' => $chapters]);
+        } else {
+            throw new \Exception('Failed to retrieve chapters. Status: ' . $response->status());
+        }
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Error occurred: ' . $e->getMessage()], 500);
     }
 }
 
+public function fetchimage($id)
+{
+    try {
+        $response = Http::withHeaders([
+            "x-rapidapi-host" => "mangaverse-api.p.rapidapi.com",
+            "x-rapidapi-key" => "275ae33d7fmshb2db00522b0c720p135beejsna20a10208221",
+        ])->get("https://mangaverse-api.p.rapidapi.com/manga/image?id=659524e9597f3b00281f070d");
+
+        if ($response->successful()) {
+            $chapters = $response->json();
+            return view('chapters', ['chapters' => $chapters]);
+        } else {
+            throw new \Exception('Failed to retrieve chapters. Status: ' . $response->status());
+        }
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Error occurred: ' . $e->getMessage()], 500);
+    }
+}
 
 }

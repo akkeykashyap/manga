@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
     <div class="container mt-5">
         <h1>{{ $mangaDetail['title'] }}</h1>
         <a href="{{ route('manga.chapters', ['id' => $mangaDetail['id']]) }}">
-            <img src="{{ $mangaDetail['thumb'] }}" class="img-fluid" alt="{{ $mangaDetail['title'] }}">
+            <button>Read</button>
         </a>
         <p class="mt-3">{{ $mangaDetail['summary'] }}</p>
         <p><strong>Genres:</strong> {{ implode(', ', $mangaDetail['genres']) }}</p>
@@ -26,4 +26,4 @@
 
     </div>
 </body>
-</html>
+</html> --}}

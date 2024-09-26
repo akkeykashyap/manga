@@ -50,27 +50,42 @@
 
         </div>
         @if (isset($mangaResponse) && !empty($mangaResponse['data']))
-            <div class="row">
-                @foreach ($mangaResponse['data'] as $manga)
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <img src="{{ $manga['thumb'] }}" class="card-img-top" alt="{{ $manga['title'] }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $manga['title'] }}</h5>
-                                <p class="card-text">{{ $manga['summary'] }}</p>
-                                <p class="card-text">{{ implode(', ', $manga['genres']) }}</p>
-                                <p class="card-text"><small class="text-muted">Status: {{ $manga['status'] }}</small>
-                                </p>
-                                <a href="{{ route('manga.chapters', ['id' => $manga['id']]) }}">
-                                    <img src="{{ $manga['thumb'] }}" class="img-fluid" alt="{{ $manga['title'] }}">
-                                </a>
-                            </div>
+        <div class="row">
+            @foreach ($mangaResponse['data'] as $manga)
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="{{ $manga['thumb'] }}" class="card-img-top" alt="{{ $manga['title'] }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $manga['title'] }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ $manga['sub_title'] }}</h6>
+                            <p class="card-text">{{ $manga['summary'] }}</p>
+                            <p class="card-text">{{ implode(', ', $manga['genres']) }}</p>
+                            <p class="card-text"><small class="text-muted">Status: {{ $manga['status'] }}</small></p>
+                            <p class="card-text"><small class="text-muted">Authors: {{ implode(', ', $manga['authors']) }}</small></p>
+                            <p class="card-text"><small class="text-muted">Total Chapters: {{ $manga['total_chapter'] }}</small></p>
+                            <a href="{{ route('manga.chapters', ['id' => $manga['id']]) }}">
+                                <button class="btn btn-primary">Read</button>
+                            </a>
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
+        </div>
         @elseif(isset($mangaResponse))
             <p>No manga found.</p>
+        @endif
+
+
+        @if (isset($chapters) && !empty($chapters['data']))
+            <h2 class="mt-5">Chapters</h2>
+            <ul class="list-group">
+                @foreach ($chapters['data'] as $chapter)
+                    <li class="list-group-item">
+                        <a href="{{ $chapter['title'] }}" target="_blank">{{ $chapter['title'] }}</a>
+                        <small class="text-muted">Released on: {{ $chapter['release_date'] }}</small>
+                    </li>
+                @endforeach
+            </ul>
         @endif
     </div>
     <footer class="footer">
